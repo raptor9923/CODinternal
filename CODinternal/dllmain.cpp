@@ -1,5 +1,11 @@
 #include"getd3d9device.h"
 
+
+void Hack()
+{
+
+}
+
 tEndScene origEndScene;
 LPDIRECT3DDEVICE9 devicePtr=nullptr;
 void* device[119];
