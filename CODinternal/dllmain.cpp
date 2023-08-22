@@ -1,19 +1,22 @@
 #include"getd3d9device.h"
-
-
-void Hack()
-{
-
-}
+#include"memory.h"
 
 tEndScene origEndScene;
 LPDIRECT3DDEVICE9 devicePtr=nullptr;
 void* device[119];
+
+HRESULT APIENTRY Hack(LPDIRECT3DDEVICE9 device)
+{
+    return origEndScene(device);
+}
+
 DWORD WINAPI HackThread()
 {
-    if(GetD3D9Device(device,sizeof(device)))
-        origEndScene=hook;
-    //hook process
+    if (GetD3D9Device(device, sizeof(device)))
+    {
+        origEndScene = (tEndScene)memory::Detour32((BYTE*)device[42], (BYTE*)Hack, 7);
+    }
+            //hook process
     return 0;
 }
 
