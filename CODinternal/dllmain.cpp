@@ -7,6 +7,7 @@ void* device[119];
 
 HRESULT APIENTRY Hack(LPDIRECT3DDEVICE9 device)
 {
+    OutputDebugStringA("SD");
     return origEndScene(device);
 }
 

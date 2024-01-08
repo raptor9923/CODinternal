@@ -14,7 +14,14 @@ namespace memory
 	{
 		if (size < 5)
 			return false;
-		//VirtualAlloc();
+		DWORD protection;
+		VirtualProtect(source, size, PAGE_EXECUTE_READWRITE, &protection);
+		auto relativeAddress = (uintptr_t)((uintptr_t)destination - (uintptr_t)source - 5);
+		*source = 0xE9;
+		*(uintptr_t*)(source + 1) = relativeAddress;
+		DWORD temp;
+		VirtualProtect(source, size, protection, &temp);
+		return true;
 	}
 	
 	BYTE* Detour32(BYTE* source, BYTE* destination, int size)
@@ -24,15 +31,15 @@ namespace memory
 			return 0;
 		// create code section for executing cut bytes
 		auto gateway = (BYTE*)VirtualAlloc(0, size + 5, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
-		// copy bytes
+		// copy code to gateway 
 		memcpy_s(gateway, size, source, size);
-		auto relativeAddres = (uintptr_t)((uintptr_t)source - (uintptr_t)gateway);
-		auto relativeAddres2 = (uintptr_t)((uintptr_t)gateway- (uintptr_t)source);
-		auto srelativeAddres = (intptr_t)((uintptr_t)source - (uintptr_t)gateway);
-		auto srelativeAddres2 = (intptr_t)((uintptr_t)gateway - (uintptr_t)source);
-		int b = 2;
-		int c = 2 + b;
+		// insert jump address to gateway code
+		auto relativeAddres =(uintptr_t)source - (uintptr_t)gateway;
+		*(gateway + size) = 0xE9;
+		*(uintptr_t*)(gateway + size + 1) = relativeAddres;
 
-		return 0;
+		Hook(source, destination, size);
+		return gateway;
+		
 	}
 }
