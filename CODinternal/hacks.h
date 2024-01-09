@@ -1,10 +1,8 @@
 #pragma once
 #include<string>
 #include"windows.h"
-#include"d3dx9.h"
-#pragma comment(lib, "d3d9.lib")
-#pragma comment(lib, "d3dx9.lib")
-#include<d3d9.h>
+#include"drawing.h"
+
 
 class Hacks
 {
@@ -16,7 +14,9 @@ public:
 		menu,
 		aim
 	};
-	void MyCreateFont(IDirect3DDevice9* device, std::wstring font);
+	LPD3DXFONT* GetFontPtr();
+	void MyCreateFont(IDirect3DDevice9* device, const std::wstring& font);
+	void DrawMenu(IDirect3DDevice9* device);
 	void KeyInput();
 };
 

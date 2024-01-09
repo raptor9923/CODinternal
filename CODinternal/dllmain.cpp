@@ -1,6 +1,7 @@
 #include"getd3d9device.h"
 #include"memory.h"
 #include"hacks.h"
+#include"ESP.h"
 
 tEndScene origEndScene;
 Hacks hack;
@@ -11,10 +12,14 @@ bool bInit{ false };
 // hooked endScene function
 HRESULT APIENTRY HackedEndScene(LPDIRECT3DDEVICE9 device)
 {
-    if (bInit)
+    if (!bInit)
     {
         hack.MyCreateFont(device, L"Tahoma");
+        ESP::SetupDirectX(device, hack.GetFontPtr());
+        bInit = true;
     }
+    hack.KeyInput();
+    hack.DrawMenu(device);
 
    return origEndScene(device);
 }

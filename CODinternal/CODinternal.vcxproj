@@ -156,11 +156,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="drawing.cpp" />
+    <ClCompile Include="ESP.cpp" />
     <ClCompile Include="getd3d9device.cpp" />
     <ClCompile Include="hacks.cpp" />
     <ClCompile Include="memory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="drawing.h" />
+    <ClInclude Include="ESP.h" />
     <ClInclude Include="getd3d9device.h" />
     <ClInclude Include="hacks.h" />
     <ClInclude Include="memory.h" />
