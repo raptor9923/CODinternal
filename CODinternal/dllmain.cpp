@@ -1,23 +1,31 @@
 #include"getd3d9device.h"
 #include"memory.h"
+#include"hacks.h"
 
 tEndScene origEndScene;
+Hacks hack;
 LPDIRECT3DDEVICE9 devicePtr=nullptr;
 void* device[119];
+bool bInit{ false };
 
-HRESULT APIENTRY Hack(LPDIRECT3DDEVICE9 device)
+// hooked endScene function
+HRESULT APIENTRY HackedEndScene(LPDIRECT3DDEVICE9 device)
 {
-    OutputDebugStringA("SD");
-    return origEndScene(device);
+    if (bInit)
+    {
+        hack.MyCreateFont(device, L"Tahoma");
+    }
+
+   return origEndScene(device);
 }
 
 DWORD WINAPI HackThread()
 {
+    // hook endScene function
     if (GetD3D9Device(device, sizeof(device)))
     {
-        origEndScene = (tEndScene)memory::Detour32((BYTE*)device[42], (BYTE*)Hack, 7);
+        origEndScene = (tEndScene)memory::Detour32((BYTE*)device[42], (BYTE*)HackedEndScene, 7);
     }
-            //hook process
     return 0;
 }
 
