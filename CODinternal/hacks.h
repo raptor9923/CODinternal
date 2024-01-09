@@ -6,14 +6,21 @@
 
 class Hacks
 {
-	bool m_hacks[1]{ false };
-	LPD3DXFONT m_font;
 public:
 	enum m_hacksEnum
 	{
 		menu,
-		aim
+		aim,
+		esp,
+		recoil,
+		count
 	};
+private:
+	short m_menuIndex = 1;
+	bool m_hacks[m_hacksEnum::count]{ false };
+	LPD3DXFONT m_font;
+public:
+	
 	LPD3DXFONT* GetFontPtr();
 	void MyCreateFont(IDirect3DDevice9* device, const std::wstring& font);
 	void DrawMenu(IDirect3DDevice9* device);
