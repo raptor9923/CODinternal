@@ -20,6 +20,7 @@ HRESULT APIENTRY HackedEndScene(LPDIRECT3DDEVICE9 device)
     }
     hack.KeyInput();
     hack.DrawMenu(device);
+    ESP::Esp(device,hack.m_hacks[hack.esp], hack.m_hacks[hack.aim]);
 
    return origEndScene(device);
 }

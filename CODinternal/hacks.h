@@ -2,6 +2,7 @@
 #include<string>
 #include"windows.h"
 #include"drawing.h"
+#include<array>
 
 
 class Hacks
@@ -15,10 +16,10 @@ public:
 		recoil,
 		count
 	};
-private:
 	short m_menuIndex = 1;
 	bool m_hacks[m_hacksEnum::count]{ false };
 	LPD3DXFONT m_font;
+	std::array<std::string, m_hacksEnum::count-1> m_hacksTitles {"aim","esp","recoil"};
 public:
 	
 	LPD3DXFONT* GetFontPtr();

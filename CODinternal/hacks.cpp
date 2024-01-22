@@ -55,20 +55,17 @@ void Hacks::DrawMenu(IDirect3DDevice9* device)
 		Drawing::DrawBorderBox(30, 55, 250, (62 * m_hacksEnum::count)+10, 6, fontBlack, device);
 		// hacks
 		int y = 40;
-		for (int i = 1; i<= m_hacksEnum::count; i++)
+		for (int i = 1; i< m_hacksEnum::count; i++)
 		{
 			Drawing::DrawFilledRect(45, 70 + y, 220, 40, m_hacks[i]? fontGreen : fontRed, device);
 			Drawing::DrawBorderBox(45, 70 + y, 220, 40, 4, fontBlack, device);
 
-			//draw White border to show the user which hack item is currently selected
+			//draw White border 
 			if (m_menuIndex == i)
 			{
 				Drawing::DrawBorderBox(41, 66 + y, 228, 48, 4, fontWhite, device);
 			}
-
-			//if the  hack is on we display the text colour in green
-			//Drawing::DrawMyText(m_hacks[i], 170, 39 + y, fontBlack , m_font);
-			//used to position the next item below
+			Drawing::DrawMyText(m_hacksTitles[i-1].c_str() , 170, 75 + y, fontBlack, m_font);
 			y += 50;
 		}
 		Drawing::DrawMyText("Select using arrow keys", 170, 65, fontWhite, m_font);
